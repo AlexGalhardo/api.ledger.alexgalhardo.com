@@ -2,5 +2,5 @@ POST http://localhost:3000/graphql
 Content-Type: application/json
 
 {
-  "query": "{ account(id: \"2\") { id name balance transactions { id amount description date } } }"
+  "query": "{ account(id: \"default-account-id\") { id owner_name balance created_at updated_at transactions { id amount description date } } }"
 }

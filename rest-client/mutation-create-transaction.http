@@ -1,0 +1,6 @@
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation { createTransaction(source_account_id: \"66b77082876171123b5c7fca\", destination_account_id: \"default-account-id\", amount: 1200, description: \"Transfer funds\", type: PIX, success: true) { id amount description date source_account_id destination_account_id type status } }"
+}

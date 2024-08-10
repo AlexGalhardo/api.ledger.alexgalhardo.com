@@ -1,0 +1,6 @@
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "query { transactions { id amount description date source_account_id destination_account_id type success } }"
+}

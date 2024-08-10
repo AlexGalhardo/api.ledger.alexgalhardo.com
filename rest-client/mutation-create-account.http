@@ -1,0 +1,6 @@
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "mutation { createAccount(owner_name: \"New Account\", owner_email: \"newaccount@example.com\", balance: 0) { account_id owner_name owner_email balance created_at updated_at } }"
+}
