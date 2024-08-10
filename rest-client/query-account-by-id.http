@@ -1,0 +1,6 @@
+POST http://localhost:3000/graphql
+Content-Type: application/json
+
+{
+  "query": "{ account(id: \"2\") { id name balance transactions { id amount description date } } }"
+}

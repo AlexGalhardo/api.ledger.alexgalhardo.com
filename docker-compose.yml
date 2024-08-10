@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    container_name: ledger-mongodb
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: ledger-mongodb
+    ports:
+      - 27017:27017
+    networks:
+      - network
+
+networks:
+    network:
+        driver: bridge
