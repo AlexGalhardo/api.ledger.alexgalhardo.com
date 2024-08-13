@@ -4,6 +4,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'],
   collectCoverage: false,
-  testTimeout: 10000,
+  // testTimeout: 20000,
   coverageDirectory: 'coverage',
 };
