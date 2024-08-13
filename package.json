@@ -1,11 +1,15 @@
 {
 	"name": "api.ledger.alexgalhardo.com",
 	"scripts": {
-		"dev": "bun --watch src/server.ts",
-		"start": "bun src/server.ts",
-		"prepare": "husky",
+		"dev": "npx ts-node-dev src/server.ts",
+		"start": "node -r ts-node/register src/server.ts",
+		"bun:dev": "bun --watch src/server.ts",
+		"bun:start": "bun src/server.ts",
+		"prepare": "npx husky",
 		"format": "prettier --write \"src/**/*.ts\"",
-		"test": "jest"
+		"test": "jest",
+		"build": "tsc --project ./",
+		"start:prod": "npm run build && node dist/src/server.js"
 	},
 	"dependencies": {
 		"@types/supertest": "^6.0.2",
@@ -16,7 +20,8 @@
 		"koa-graphql": "^0.12.0",
 		"koa-mount": "^4.0.0",
 		"mongoose": "^8.4.0",
-		"zod": "^3.23.8"
+		"zod": "^3.23.8",
+		"ts-node-dev": "^1.1.8"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^5.0.2",

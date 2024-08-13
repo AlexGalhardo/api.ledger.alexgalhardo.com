@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import "dotenv/config";
 
 async function main() {
-    await mongoose.connect(process.env.MONGO_DB_URL);
+    await mongoose.connect(process.env.MONGO_DB_URL ?? "mongodb://root:root@localhost/ledger-mongodb?authSource=admin");
 }
 
 main().catch((err) => console.log(err));
