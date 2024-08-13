@@ -1,7 +1,8 @@
 import Koa from "koa";
-import mount from "koa-mount";
+import * as mount from "koa-mount";
 import { graphqlHTTP } from "koa-graphql";
 import GraphqlSchema from "./graphql/schema";
+import { API_URL } from "./utils/constants";
 
 const app = new Koa();
 
@@ -25,10 +26,8 @@ app.use(
             await next();
         }
     })
-    .listen(process.env.PORT || 4000, () => {
-        const host = process.env.HOST || "localhost" || "127.0.0.1" || "0.0.0.0";
-        const port = process.env.PORT || 4000;
-        console.log(`api.ledger.alexgalhardo.com server running on port http://${host}:${port}/graphql`);
+    .listen(process.env.PORT || 3000, () => {
+        console.log(`\n\n api.ledger.alexgalhardo.com server running on port ${API_URL}/graphql`);
     });
 
 export default app;
