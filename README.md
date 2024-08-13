@@ -40,15 +40,15 @@ cp .env.example .env
 chmod +x setup.sh && ./setup.sh
 ```
 
-7. Start local server
-```bash
-npm run dev
-```
-
 ## API Requests
 
-- You can see the HTTP Requests references inside folder **rest-client/**
-- You can also see GraphQL Client in: <http://localhost:3000/graphql>
+- You can see the HTTP Requests references inside folder [rest-client/](rest-client/)
+- You can also see GraphQL Client on:
+   - Localhost: <http://localhost:3000/graphql>
+   - Live: <https://api.ledger.alexgalhardo.com/graphql>
+
+## Documentation
+- Read and add usefull documentation (markdown, notes, images, best practices, etc) about this project inside folder [docs/](docs/)
 
 ## License
 
