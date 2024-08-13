@@ -30,3 +30,5 @@ app.use(
         const port = process.env.PORT || 4000;
         console.log(`api.ledger.alexgalhardo.com server running on port http://${host}:${port}/graphql`);
     });
+
+export default app;

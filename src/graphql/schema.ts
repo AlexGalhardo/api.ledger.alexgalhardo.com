@@ -10,8 +10,8 @@ import {
     GraphQLInt,
     GraphQLEnumType,
 } from "graphql";
-import { Bcrypt } from "src/utils/bcrypt.util";
-import CreateAccountValidator from "src/validators/create-account.validator";
+import { Bcrypt } from "../utils/bcrypt.util";
+import CreateAccountValidator from "../validators/create-account.validator";
 
 const TransactionTypeEnum = new GraphQLEnumType({
     name: "TransactionType",
@@ -22,6 +22,13 @@ const TransactionTypeEnum = new GraphQLEnumType({
         DEPOSIT: { value: "DEPOSIT" },
     },
 });
+
+enum EnumTransactionType {
+    PIX = "PIX",
+    TED = "TED",
+    DOC = "DOC",
+    DEPOSIT = "DEPOSIT",
+}
 
 const TransactionType = new GraphQLObjectType({
     name: "Transaction",
@@ -126,8 +133,8 @@ const Mutation = new GraphQLObjectType({
 
                     await account.save();
                     return account;
-                } catch (error) {
-                    throw new Error(error);
+                } catch (error: any) {
+                    throw new Error(error.message);
                 }
             },
         },
@@ -141,47 +148,51 @@ const Mutation = new GraphQLObjectType({
                 type: { type: new GraphQLNonNull(TransactionTypeEnum) },
             },
             resolve: async (_, args) => {
-                const sourceAccount = await Account.findOne({ _id: args.source_account_id });
-                if (!sourceAccount) {
-                    throw new Error("Account not found");
-                }
-
-                if (args.type === "DEPOSIT") {
-                    sourceAccount.balance += args.amount;
-                    await sourceAccount.save();
-                } else {
-                    if (sourceAccount.balance < args.amount) {
-                        throw new Error("Insufficient balance to create transaction");
+                try {
+                    const sourceAccount = await Account.findOne({ _id: args.source_account_id });
+                    if (!sourceAccount) {
+                        throw new Error("Account not found");
                     }
 
-                    const destinationAccount = args.destination_account_id
-                        ? await Account.findOne({ _id: args.destination_account_id })
-                        : null;
+                    if (args.type === EnumTransactionType.DEPOSIT) {
+                        sourceAccount.balance += args.amount;
+                        await sourceAccount.save();
+                    } else {
+                        if (sourceAccount.balance < args.amount) {
+                            throw new Error("Insufficient balance to create transaction");
+                        }
 
-                    if (args.destination_account_id && !destinationAccount) {
-                        throw new Error("Destination account not found");
+                        const destinationAccount = args.destination_account_id
+                            ? await Account.findOne({ _id: args.destination_account_id })
+                            : null;
+
+                        if (args.destination_account_id && !destinationAccount) {
+                            throw new Error("Destination account not found");
+                        }
+
+                        sourceAccount.balance -= args.amount;
+                        destinationAccount.balance += args.amount;
+                        await sourceAccount.save();
+                        await destinationAccount.save();
                     }
 
-                    sourceAccount.balance -= args.amount;
-                    destinationAccount.balance += args.amount;
-                    await sourceAccount.save();
-                    await destinationAccount.save();
+                    const transaction = new Transaction({
+                        transaction_id: randomUUID(),
+                        source_account_id: args.source_account_id,
+                        destination_account_id: args.destination_account_id
+                            ? args.destination_account_id
+                            : args.source_account_id,
+                        amount: args.amount,
+                        description: args.description,
+                        type: args.type,
+                    });
+
+                    await transaction.save();
+
+                    return transaction;
+                } catch (error: any) {
+                    throw new Error(error.message);
                 }
-
-                const transaction = new Transaction({
-                    transaction_id: randomUUID(),
-                    source_account_id: args.source_account_id,
-                    destination_account_id: args.destination_account_id
-                        ? args.destination_account_id
-                        : args.source_account_id,
-                    amount: args.amount,
-                    description: args.description,
-                    type: args.type,
-                });
-
-                await transaction.save();
-
-                return transaction;
             },
         },
     },

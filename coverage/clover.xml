@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1723563636157" clover="3.2.0">
+  <project timestamp="1723563636157" name="All files">
+    <metrics statements="7" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0" elements="11" coveredelements="3" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="create-account.validator.ts" path="/Users/alexgalhardo/projects/api.ledger.alexgalhardo.com/src/validators/create-account.validator.ts">
+      <metrics statements="7" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="11" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

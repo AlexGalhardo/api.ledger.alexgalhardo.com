@@ -16,7 +16,21 @@
 		"strictNullChecks": false,
 		"noImplicitAny": false,
 		"strictBindCallApply": false,
-		"forceConsistentCasingInFileNames": false,
-		"noFallthroughCasesInSwitch": false
-	}
+		// "forceConsistentCasingInFileNames": false,
+		"noFallthroughCasesInSwitch": false,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"paths": {
+			"*": [
+				"node_modules/*"
+			]
+		}
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }

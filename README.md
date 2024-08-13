@@ -35,7 +35,7 @@ npm install
 cp .env.example .env
 ```
 
-5. Create Migrations and Seeds
+5. Up database and server
 ```bash
 chmod +x setup.sh && ./setup.sh
 ```
