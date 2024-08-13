@@ -13,6 +13,11 @@
 - [Moongoose ODM](https://mongoosejs.com/)
 - [GraphQL](https://graphql.org/)
 
+## How to improve
+- [ ] Add PM2 process manager
+- [ ] Finish JWT Middleware Authentication to make transactions and queries
+- [ ] Create integrations tests
+
 ## Development Setup Local
 
 1. Clone repository

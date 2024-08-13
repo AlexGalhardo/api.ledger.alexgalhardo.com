@@ -12,6 +12,7 @@ import {
 } from "graphql";
 import { Bcrypt } from "../utils/bcrypt.util";
 import CreateAccountValidator from "../validators/create-account.validator";
+import { ErrorsMessages } from "../utils/errors-messages.util";
 
 const TransactionTypeEnum = new GraphQLEnumType({
     name: "TransactionType",
@@ -147,11 +148,13 @@ const Mutation = new GraphQLObjectType({
                 description: { type: new GraphQLNonNull(GraphQLString) },
                 type: { type: new GraphQLNonNull(TransactionTypeEnum) },
             },
-            resolve: async (_, args) => {
+            resolve: async (_, args, ctx) => {
                 try {
+                    // if (!ctx.user) throw new Error("Unauthorized");
+
                     const sourceAccount = await Account.findOne({ _id: args.source_account_id });
                     if (!sourceAccount) {
-                        throw new Error("Account not found");
+                        throw new Error(ErrorsMessages.ACCOUNT_NOT_FOUND);
                     }
 
                     if (args.type === EnumTransactionType.DEPOSIT) {
@@ -159,7 +162,7 @@ const Mutation = new GraphQLObjectType({
                         await sourceAccount.save();
                     } else {
                         if (sourceAccount.balance < args.amount) {
-                            throw new Error("Insufficient balance to create transaction");
+                            throw new Error(ErrorsMessages.INSUFFICIENT_BALANCE);
                         }
 
                         const destinationAccount = args.destination_account_id
@@ -167,7 +170,7 @@ const Mutation = new GraphQLObjectType({
                             : null;
 
                         if (args.destination_account_id && !destinationAccount) {
-                            throw new Error("Destination account not found");
+                            throw new Error(ErrorsMessages.DESTINATION_ACCOUNT_NOT_FOUND);
                         }
 
                         sourceAccount.balance -= args.amount;

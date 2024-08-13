@@ -75,7 +75,7 @@ describe("Test GraphQL Mutation: createTransaction (Transfer Money)", () => {
 			name: "AccountA",
 			email: "accounta@example.com",
 			password: "passwordA",
-			balance: 500, // Not enough balance for the transfer
+			balance: 500,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
 		});
@@ -122,8 +122,8 @@ describe("Test GraphQL Mutation: createTransaction (Transfer Money)", () => {
 
 		const updatedAccountA = await MockAccount.findOne({ _id: "account_a_id" });
 		const updatedAccountB = await MockAccount.findOne({ _id: "account_b_id" });
-		expect(updatedAccountA.data.balance).toBe(500); // Balance remains the same
-		expect(updatedAccountB.data.balance).toBe(500); // Balance remains the same
+		expect(updatedAccountA.data.balance).toBe(500);
+		expect(updatedAccountB.data.balance).toBe(500);
 	});
 
 	it("should return an error if the destination account does not exist", async () => {
@@ -167,6 +167,6 @@ describe("Test GraphQL Mutation: createTransaction (Transfer Money)", () => {
 		expect(result.errors[0].message).toBe("Destination account not found");
 
 		const updatedAccountA = await MockAccount.findOne({ _id: "account_a_id" });
-		expect(updatedAccountA.data.balance).toBe(2000); // Balance remains the same
+		expect(updatedAccountA.data.balance).toBe(2000);
 	});
 });

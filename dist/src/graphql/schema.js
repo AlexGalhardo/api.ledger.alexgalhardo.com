@@ -5,6 +5,7 @@ const node_crypto_1 = require("node:crypto");
 const graphql_1 = require("graphql");
 const bcrypt_util_1 = require("../utils/bcrypt.util");
 const create_account_validator_1 = require("../validators/create-account.validator");
+const errors_messages_util_1 = require("../utils/errors-messages.util");
 const TransactionTypeEnum = new graphql_1.GraphQLEnumType({
     name: "TransactionType",
     values: {
@@ -133,11 +134,11 @@ const Mutation = new graphql_1.GraphQLObjectType({
                 description: { type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString) },
                 type: { type: new graphql_1.GraphQLNonNull(TransactionTypeEnum) },
             },
-            resolve: async (_, args) => {
+            resolve: async (_, args, ctx) => {
                 try {
                     const sourceAccount = await moongose_1.Account.findOne({ _id: args.source_account_id });
                     if (!sourceAccount) {
-                        throw new Error("Account not found");
+                        throw new Error(errors_messages_util_1.ErrorsMessages.ACCOUNT_NOT_FOUND);
                     }
                     if (args.type === EnumTransactionType.DEPOSIT) {
                         sourceAccount.balance += args.amount;
@@ -145,13 +146,13 @@ const Mutation = new graphql_1.GraphQLObjectType({
                     }
                     else {
                         if (sourceAccount.balance < args.amount) {
-                            throw new Error("Insufficient balance to create transaction");
+                            throw new Error(errors_messages_util_1.ErrorsMessages.INSUFFICIENT_BALANCE);
                         }
                         const destinationAccount = args.destination_account_id
                             ? await moongose_1.Account.findOne({ _id: args.destination_account_id })
                             : null;
                         if (args.destination_account_id && !destinationAccount) {
-                            throw new Error("Destination account not found");
+                            throw new Error(errors_messages_util_1.ErrorsMessages.DESTINATION_ACCOUNT_NOT_FOUND);
                         }
                         sourceAccount.balance -= args.amount;
                         destinationAccount.balance += args.amount;

@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_1 = require("koa");
+const koa_body_1 = require("koa-body");
 const mount = require("koa-mount");
 const koa_graphql_1 = require("koa-graphql");
 const schema_1 = require("./graphql/schema");
 const constants_1 = require("./utils/constants");
 const app = new koa_1.default();
+app.use((0, koa_body_1.default)());
 app.use(mount("/graphql", (0, koa_graphql_1.graphqlHTTP)({
     schema: schema_1.default,
     graphiql: true,

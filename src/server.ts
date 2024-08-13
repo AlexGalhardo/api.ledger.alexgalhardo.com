@@ -1,10 +1,16 @@
 import Koa from "koa";
+import koaBody from "koa-body";
 import * as mount from "koa-mount";
 import { graphqlHTTP } from "koa-graphql";
 import GraphqlSchema from "./graphql/schema";
 import { API_URL } from "./utils/constants";
+// import { MiddlewareHeaderAuthorizationBearerJwtToken } from "./middlewares/header-authorization-bearer-jwt-token.middleware";
 
 const app = new Koa();
+
+app.use(koaBody());
+
+// app.use(MiddlewareHeaderAuthorizationBearerJwtToken);
 
 app.use(
     mount(
@@ -12,6 +18,9 @@ app.use(
         graphqlHTTP({
             schema: GraphqlSchema,
             graphiql: true,
+            // context: (ctx) => ({
+            // 	user: ctx.state.user,
+            // }),
         }),
     ),
 )
