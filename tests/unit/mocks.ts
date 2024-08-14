@@ -44,7 +44,9 @@ export class MockTransaction {
 export enum EnumTransactionType {
 	DEPOSIT = "DEPOSIT",
 	WITHDRAW = "WITHDRAW",
-	TRANSFER = "TRANSFER",
+	PIX = "PIX",
+	TED = "TED",
+	DOC = "DOC"
 }
 
 export const TransactionType = new GraphQLObjectType({

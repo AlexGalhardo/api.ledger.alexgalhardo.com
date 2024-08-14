@@ -2,6 +2,8 @@
 	<h1 align="center"><a href="https://api.ledger.alexgalhardo.com/" target="_blank">api.ledger.alexgalhardo.com</a></h1>
 </div>
 
+https://github.com/user-attachments/assets/de0b0060-bb91-4726-9782-6ea8b49692da
+
 ## Introduction
 
 - Coding challenge to create a simple Banking Ledger
@@ -16,7 +18,8 @@
 ## How to improve
 - [ ] Add PM2 process manager
 - [ ] Finish JWT Middleware Authentication to make transactions and queries
-- [ ] Create integrations tests
+- [ ] Create integrations tests and tests for graphql queries
+- [ ] Use database transactions and deal with concurrency properly (A.C.I.D operations)
 
 ## Development Setup Local
 
@@ -30,17 +33,7 @@ git clone git@github.com:AlexGalhardo/api.ledger.alexgalhardo.com.git
 cd api.ledger.alexgalhardo.com/
 ```
 
-3. Install dependencies
-```bash
-npm install
-```
-
-4. Setup your environment variables
-```bash
-cp .env.example .env
-```
-
-5. Up database and server
+3. Create .env, install dependencies, up docker and server
 ```bash
 chmod +x setup.sh && ./setup.sh
 ```
